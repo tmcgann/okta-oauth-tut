@@ -10,7 +10,8 @@ if (!uri) {
     process.exit(1)
 }
 
-const getOAuthToken = async (token) => {
+const getOAuthToken = async () => {
+    const token = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)
     return request({
         uri: `${ISSUER}/v1/token`,
         json: true,
@@ -26,9 +27,8 @@ const getOAuthToken = async (token) => {
 }
 
 const sendAPIRequest = async () => {
-    const token = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)
     try {
-        const auth = await getOAuthToken(token)
+        const auth = await getOAuthToken()
 
         const response = await request({
             uri,
